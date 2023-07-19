@@ -27,7 +27,7 @@ const config = {
     defaultLocale: 'ko',
     locales: ['ko'],
   },
-
+  themes: ['@docusaurus/theme-live-codeblock'],
   presets: [
     [
       'classic',
@@ -130,6 +130,12 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      // @docusaurus/theme-live-codeblock 관련 codeblock과 result가 어떻게 표시될지
+      // default 'bottom' - codeblock 위에, result 아래
+      // 'top' - result 위에, codeblock 아래
+      liveCodeBlock: {
+        playgroundPosition: 'top',
       },
     }),
 };
