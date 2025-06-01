@@ -27,6 +27,10 @@ const config = {
     defaultLocale: 'ko',
     locales: ['ko'],
   },
+  future: {
+    v4: true, // Docusaurus v4의 미래 플래그를 활성화하여 최신 최적화를 적용합니다.
+    experimental_faster: true, // Docusaurus Faster를 전역으로 활성화합니다.
+  },
   themes: ['@docusaurus/theme-live-codeblock'],
   presets: [
     [
@@ -39,7 +43,7 @@ const config = {
           // Remove this to remove the "edit this page" links.
           // editUrl:
           //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          routeBasePath: '/',
+          routeBasePath: 'docs',
         },
         blog: {
           showReadingTime: true,
@@ -49,6 +53,8 @@ const config = {
           //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
           blogSidebarTitle: 'All posts',
           blogSidebarCount: 'ALL',
+          routeBasePath: '/',
+          authorsMapPath: 'authors.json',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -67,13 +73,13 @@ const config = {
           src: 'img/logo_mo.png',
         },
         items: [
-          { to: '/blog', label: 'Blog', position: 'left' },
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
-          },
+          // { to: '/blog', label: 'Blog', position: 'left' },
+          // {
+          // type: 'doc',
+          // docId: 'intro',
+          // position: 'left',
+          // label: 'Tutorial',
+          // },
           {
             href: 'https://github.com/jum0',
             position: 'right',
