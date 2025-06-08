@@ -2,11 +2,62 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jum0.github.io/</id>
     <title>DevJum0 Blog</title>
-    <updated>2023-07-18T00:00:00.000Z</updated>
+    <updated>2025-06-07T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jum0.github.io/"/>
     <subtitle>DevJum0 Blog</subtitle>
     <icon>https://jum0.github.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[6월 1주차 기록]]></title>
+        <id>https://jum0.github.io/25-6-week-1</id>
+        <link href="https://jum0.github.io/25-6-week-1"/>
+        <updated>2025-06-07T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[{/ truncate /}]]></summary>
+        <content type="html"><![CDATA[
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="여러-개의-github-ssh-관리">여러 개의 github ssh 관리<a href="https://jum0.github.io/25-6-week-1#%EC%97%AC%EB%9F%AC-%EA%B0%9C%EC%9D%98-github-ssh-%EA%B4%80%EB%A6%AC" class="hash-link" aria-label="여러 개의 github ssh 관리에 대한 직접 링크" title="여러 개의 github ssh 관리에 대한 직접 링크">​</a></h3>
+<p>아래 명령어로 SSH 클라이언트 설정 파일 확인 가능</p>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">cat ~/.ssh/config</span><br></span></code></pre></div></div>
+<p>어떤 repo를 특정 github ssh로 클론 받기 위해서는 Host를 입력 하면 된다</p>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">cat ~/.ssh/config</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">#jum0 account</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">Host github.com-jum0</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  HostName github.com</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  User git</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  IdentityFile ~/.ssh/jum0</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  IdentitiesOnly yes</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">#company account</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">Host github.com-companyㅠ</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  HostName github.com</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  User git</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  IdentityFile ~/.ssh/id_ed25519</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  IdentitiesOnly yes</span><br></span></code></pre></div></div>
+<p>repo 주소 - <code>git@github.com:abc-dev/def-api.git</code></p>
+<ul>
+<li>개인 계정으로 clone - <code>git@github.com-jum0:abc-dev/def-api.git</code></li>
+<li>회사 계정으로 clone - <code>git@github.com-company:abc-dev/def-api.git</code></li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="git-stash">git stash<a href="https://jum0.github.io/25-6-week-1#git-stash" class="hash-link" aria-label="git stash에 대한 직접 링크" title="git stash에 대한 직접 링크">​</a></h3>
+<p><code>git stash</code> vs <code>git stash -u</code></p>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">git stash</span><br></span></code></pre></div></div>
+<ul>
+<li>새롭게 생성한 파일이 아닌 기존의 파일로 git이 이미 추적하고 있는 파일(tracked filed)만 해당</li>
+</ul>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">git stash -u</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">git stash --include-untracked</span><br></span></code></pre></div></div>
+<ul>
+<li>git이 이미 추적하고 있는 파일뿐 아니라 새로 생성된 파일을 포함한 모든 파일 해당</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="eslint-plugin-reactjsx-sort-props-vs-eslint-plugin-perfectionist">eslint-plugin-react/jsx-sort-props vs eslint-plugin-perfectionist<a href="https://jum0.github.io/25-6-week-1#eslint-plugin-reactjsx-sort-props-vs-eslint-plugin-perfectionist" class="hash-link" aria-label="eslint-plugin-react/jsx-sort-props vs eslint-plugin-perfectionist에 대한 직접 링크" title="eslint-plugin-react/jsx-sort-props vs eslint-plugin-perfectionist에 대한 직접 링크">​</a></h3>
+<ul>
+<li>
+<p><a href="https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md" target="_blank" rel="noopener noreferrer">eslint-plugin-react/jsx-sort-props</a></p>
+</li>
+<li>
+<p><a href="https://perfectionist.dev/" target="_blank" rel="noopener noreferrer">eslint-plugin-perfectionist</a></p>
+</li>
+<li>
+<p>코드 리뷰를 하면서 boolean 변수를 prop으로 넘기는 <code>isExample={true}</code>와 <code>isExample</code>만 넘기는 코드가 프로젝트에 혼용되어 있다는 것을 알았다.
+스타일 차이로 문제는 없다고 생각되지만, 코드의 기준이 있는 게 좋다고 생각해서 관련 플러그인을 찾아보았다.
+원하는 동작은 위에서 말한 케이스와 콜백은 뒤에 오고 각 태그에 맞게 중요한 부분?(img 태그에서 src 등)은 앞에 오게, 나머지는 알파벳순으로 정도.
+커스텀의 정도가 높다고 생각해서 perfectionist를 사용하려 했는데, 콜백을 포함한 모든 순서를 설정에서 다 넣어줘야 해서 비교적 간단해 보이는 jsx-sort-props로 결정했다.
+jsx-sort-props에는 <code>reservedFirst</code> 옵션으로 특정 키워드가 앞에 오게 할 수 있었는데, 얘는 key, ref 등 몇 개만 되길래 사용하지 않았다.
+일단은 처음 의도였던 boolean prop만 린팅되도록 설정했다.</p>
+</li>
+</ul>]]></content>
+        <author>
+            <name>jum0</name>
+            <uri>https://github.com/jum0</uri>
+        </author>
+        <category label="git" term="git"/>
+        <category label="ssh" term="ssh"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Safari에서 relatedTarget 사용하기]]></title>
         <id>https://jum0.github.io/using-related-target-on-safari</id>
