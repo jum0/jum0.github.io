@@ -1,0 +1,70 @@
+---
+slug: 25-6-week-1
+title: 6월 1주차 기록
+authors: [jum0]
+tags: [git, ssh, eslint, perfectionist]
+---
+
+{/* truncate */}
+
+### 여러 개의 github ssh 관리
+
+아래 명령어로 SSH 클라이언트 설정 파일 확인 가능
+
+```bash
+cat ~/.ssh/config
+```
+
+어떤 repo를 특정 github ssh로 클론 받기 위해서는 Host를 입력 하면 된다
+
+```bash
+cat ~/.ssh/config
+
+#jum0 account
+Host github.com-jum0
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/jum0
+  IdentitiesOnly yes
+
+#company account
+Host github.com-companyㅠ
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
+```
+
+repo 주소 - `git@github.com:abc-dev/def-api.git`
+
+- 개인 계정으로 clone - `git@github.com-jum0:abc-dev/def-api.git`
+- 회사 계정으로 clone - `git@github.com-company:abc-dev/def-api.git`
+
+### git stash
+
+`git stash` vs `git stash -u`
+
+```bash
+git stash
+```
+
+- 새롭게 생성한 파일이 아닌 기존의 파일로 git이 이미 추적하고 있는 파일(tracked filed)만 해당
+
+```bash
+git stash -u
+git stash --include-untracked
+```
+
+- git이 이미 추적하고 있는 파일뿐 아니라 새로 생성된 파일을 포함한 모든 파일 해당
+
+### eslint-plugin-react/jsx-sort-props vs eslint-plugin-perfectionist
+
+- [eslint-plugin-react/jsx-sort-props](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md)
+- [eslint-plugin-perfectionist](https://perfectionist.dev/)
+
+- 코드 리뷰를 하면서 boolean 변수를 prop으로 넘기는 `isExample={true}`와 `isExample`만 넘기는 코드가 프로젝트에 혼용되어 있다는 것을 알았다.
+  스타일 차이로 문제는 없다고 생각되지만, 코드의 기준이 있는 게 좋다고 생각해서 관련 플러그인을 찾아보았다.
+  원하는 동작은 위에서 말한 케이스와 콜백은 뒤에 오고 각 태그에 맞게 중요한 부분?(img 태그에서 src 등)은 앞에 오게, 나머지는 알파벳순으로 정도.
+  커스텀의 정도가 높다고 생각해서 perfectionist를 사용하려 했는데, 콜백을 포함한 모든 순서를 설정에서 다 넣어줘야 해서 비교적 간단해 보이는 jsx-sort-props로 결정했다.
+  jsx-sort-props에는 `reservedFirst` 옵션으로 특정 키워드가 앞에 오게 할 수 있었는데, 얘는 key, ref 등 몇 개만 되길래 사용하지 않았다.
+  일단은 처음 의도였던 boolean prop만 린팅되도록 설정했다.
