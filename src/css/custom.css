@@ -48,17 +48,40 @@ html[data-theme='dark'] .header-github-link:before {
     no-repeat;
 }
 
-/* 블로그 포스트 목록 및 포스트 상세에서 작성자 정보 영역 숨기기 */
-.avatar.margin-bottom--sm {
-  display: none;
-}
-
-/* 블로그 포스트 목록 중 footer 태그의 docusaurus-mt-lg 클래스의 높이 조정 */
-footer.docusaurus-mt-lg {
+/********************** 블로그 리스트 페이지 **********************/
+/* footer 태그 높이 조정하기 */
+.blog-list-page footer.docusaurus-mt-lg {
   margin-top: 0;
 }
 
-/* 블로그 포스트 목록 중 자세히 보기 숨기기 */
-div.col.text--right.col--3 {
+/* 작성자 정보 영역 숨기기 */
+.blog-list-page .avatar.margin-bottom--sm {
+  display: none;
+}
+
+/* 자세히 보기 영역 숨기기 */
+.blog-list-page footer div:nth-child(2) {
+  display: none;
+}
+
+/********************** 블로그 포스트 상세 페이지 **********************/
+/* 작성자 정보 영역 숨기기 */
+.blog-post-page .avatar.margin-bottom--sm {
+  display: none;
+}
+
+/********************** 블로그 태그 페이지 **********************/
+/* footer 태그 높이 조정하기 */
+.blog-tags-post-list-page footer.docusaurus-mt-lg {
+  margin-top: 0;
+}
+
+/* 작성자 정보 영역 숨기기 */
+.blog-tags-post-list-page .avatar.margin-bottom--sm {
+  display: none;
+}
+
+/* 자세히 보기 영역 숨기기 */
+.blog-tags-post-list-page footer div:nth-child(2) {
   display: none;
 }
