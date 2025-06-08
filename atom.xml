@@ -57,6 +57,8 @@ jsx-sort-props에는 <code>reservedFirst</code> 옵션으로 특정 키워드가
         </author>
         <category label="git" term="git"/>
         <category label="ssh" term="ssh"/>
+        <category label="eslint" term="eslint"/>
+        <category label="perfectionist" term="perfectionist"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Safari에서 relatedTarget 사용하기]]></title>
