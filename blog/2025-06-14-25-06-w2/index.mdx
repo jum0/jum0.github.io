@@ -1,0 +1,66 @@
+---
+slug: '/25-06-w2'
+title: 6월 2주 차 기록
+authors: [jum0]
+tags: [zod, git revert, eslint, cline]
+---
+
+{/* truncate */}
+
+### zod URLs
+
+```tsx
+const schema = z.url({
+  protocol: /^https?$/,
+  hostname: /^example\.com$/,
+});
+
+schema.parse('https://example.com'); // ✅
+schema.parse('http://example.com'); // ❌ - protocol invalid
+schema.parse('https://zombo.com'); // ❌ - hostname invalid
+```
+
+- https://zod.dev/api?id=urls
+- 인풋을 검사하기 위해서 내부적으로는 `new URL()` 사용. 다른 플랫폼이나 런타임에서는 다르게 동작할 수 있다.
+
+### git revert -m &lt;parent-number&gt; &lt;merge-commit-hash&gt;
+
+```bash
+git checkout qa
+git revert -m 1 <merge-commit-hash>
+git push origin qa
+```
+
+- https://git-scm.com/docs/git-revert#Documentation/git-revert.txt--mparent-number
+- `-m <parent-number>` (또는 `--mainline <parent-number>`)
+  - 일반 commit은 하나의 부모 commit만 존재하지만, 병합 commit은 두 개 이상의 부모 커밋을 가진다. 따라서 `git revert`는 어떤 부모의 관점에서 병합을 되돌려야 하는지 없으므로 어떤 부모를 mainline으로 할지 알려줘야 한다.
+  - `-m 1`은 첫 번째 부모.
+- qa 브랜치에 병합된 특정 merge commit 브랜치를 revert 하기 위해서 사용 (`-m 1`)
+  - ex) qa 브랜치에 A 작업의 merge commit이 있고, 이어서 B 작업의 merge commit이 있다. 그런데 A 작업은 이번 스프린트에 반영되지 않는다고 하여 qa 브랜치에서 B 작업은 유지하면서 A 작업만 되돌려야 하는 상황.
+
+---
+
+### eslint.config.ts
+
+- 옛날옛날 백엔드 개발자들끼리 만들었다는 백오피스 좀 열어왔는데 린트 설정부터 필요한 것 같아 보다가 발견. `.eslintrc`, `.ignore`는 이제 안 쓰더라..
+- https://eslint.org/docs/latest/use/configure/configuration-files
+- https://eslint.org/blog/2022/08/new-config-system-part-1/
+
+  - https://jshint.com/ - eslintrc의 첫 번째 중대한 변화는 `extends` 키의 도입이었는데, 이는 JSHint에서 영감
+  - 다양한 파일(`.eslintrc.json`, `.eslintrc.yml`, `.eslintrc.js`) 지원했는데, 오히려 비js 파일에서는 유효성 검사를 하지 않아 문제들 발생. 많은 플러그인 규칙들이 이 기능에 의존해서 되돌리지도 못해.
+  - cascade 방식은 사람들이 자신이 작업 중인 프로젝트의 상위 디렉토리에 구성 파일을 인식하지 못하는 문제를 자주 일으켰고,
+    `overrides` 구성 안의 `extends`는 `files` 및 `excludedFiles`에 대해 AND 연산자를 사용하여 병합되는데 무슨 의미인지 정확히 모르겠고 우리도 헷갈림ㅎ
+  - 점점 복잡해지면서 최종 설정 결과를 계산하는 모든 조합을 아무도 완전히 이해하지 못하는 상황까지 이어짐.
+  - 많은 문제들이 산재된 가운데 이어진 ESLint 역사상 가장 논쟁이 많은 [RFC 제안서](https://github.com/eslint/rfcs/pull/9), 18개월의 수정과 논쟁 끝에 완전히 새로운 시스템을 만들기로 결정
+
+- https://eslint.org/blog/2022/08/new-config-system-part-2/
+  - https://eslint.org/blog/2022/08/new-config-system-part-3/
+  - 목표. js 사용 방식의 지금의 현실 반영,
+    프로젝트 구성에서 한 가지 방식만 되도록,
+    네이티브 로딩 방식인 JS 런타임의 로딩 기능 직접 활용해서 복잡해지지 않도록,
+    기존 플러그인 작동,
+    하위 호환성 우선
+
+### cline
+
+- https://cline.bot/
