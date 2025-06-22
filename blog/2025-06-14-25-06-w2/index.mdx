@@ -33,9 +33,12 @@ git push origin qa
 
 - https://git-scm.com/docs/git-revert#Documentation/git-revert.txt--mparent-number
 - `-m <parent-number>` (또는 `--mainline <parent-number>`)
+
   - 일반 commit은 하나의 부모 commit만 존재하지만, 병합 commit은 두 개 이상의 부모 커밋을 가진다. 따라서 `git revert`는 어떤 부모의 관점에서 병합을 되돌려야 하는지 없으므로 어떤 부모를 mainline으로 할지 알려줘야 한다.
   - `-m 1`은 첫 번째 부모.
+
 - qa 브랜치에 병합된 특정 merge commit 브랜치를 revert 하기 위해서 사용 (`-m 1`)
+
   - ex) qa 브랜치에 A 작업의 merge commit이 있고, 이어서 B 작업의 merge commit이 있다. 그런데 A 작업은 이번 스프린트에 반영되지 않는다고 하여 qa 브랜치에서 B 작업은 유지하면서 A 작업만 되돌려야 하는 상황.
 
 ---
