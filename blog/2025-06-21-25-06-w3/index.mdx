@@ -1,0 +1,78 @@
+---
+slug: '/25-06-w3'
+title: 6월 3주 차 기록
+authors: [jum0]
+tags: [typescript, zod, safeParse, scutil, pnpm, catalog, nextjs]
+---
+
+{/* truncate */}
+
+### typescript
+
+- Zod는 런타임에서의 타입을 검증하므로 컴파일 타임에서만 타입을 검사하는 Typescript를 보완할 수 있다.
+- 그럼 왜 Typescript가 런타임까지 타입을 검사하도록 설계되지는 못했던 것일까.
+
+  - Typescript는 기존의 JS 코드가 수정 없이 그대로 돌아가게 해야 했기에 Superset으로 설계
+  - 런타임마다 타입을 검사하면 성능 저하 이슈 발생 가능 & 런타임 검사 코드가 들어가면 기존 코드에서 사이드 이펙트 발생 가능성 있음
+  - 정적 분석 도구로써의 역할 분리 명확히 하기 위해서
+
+### zod safeParse
+
+```typescript
+import { z } from 'zod';
+
+const schema = z.object({ age: z.number().min(0) });
+const input = { age: -1 };
+
+// --- parse: 실패 시 예외 발생 ---
+try {
+  const data = schema.parse(input);
+  console.log('✅ parse 성공:', data);
+} catch (err) {
+  console.error('❌ parse 실패:', err);
+}
+
+// --- safeParse: 실패해도 예외 없이 결과 반환 ---
+const result = schema.safeParse(input);
+
+if (result.success) {
+  console.log('✅ safeParse 성공:', result.data);
+} else {
+  console.error('❌ safeParse 실패:', result.error.issues);
+}
+```
+
+- 예외 없이 결과 객체로 반환
+- 에러가 있어도 앱이 죽지 않음
+
+### scutil --dns
+
+```bash
+scutil --dns
+```
+
+- 시스템에서 사용하는 DNS 설정 상태 확인하기 위한 명령어
+- OvenVPN 켜서 VPN 스위칭 했는데도 안 붙어진다면 제대로 적용되어 있는지 확인해 볼 수 있는 명령어
+- 같은 resolver의 nameserver[0]에서 nameserver[1]로 순차적으로 fallback
+
+### pnpm catalog
+
+- https://pnpm.io/catalogs
+- `pnpm-workspace.yaml`에 정의하고 사용
+- 직접 패키지 버전을 명시하는 방법보다, 한 번에 관리할 수 있으므로 유지 보수하는 데 이점 (변수처럼)
+
+---
+
+### Next.js 15.1+는 Vercel 외 환경에서 사실상 쓸 수 없다
+
+- https://news.hada.io/topic?id=21430&utm_source=slack&utm_medium=bot&utm_campaign=T02084P9YJE
+
+### 개발자의 물경력은 어떻게 만들어지는가
+
+- https://yozm.wishket.com/magazine/detail/3144/
+
+  - 주니어 때 기술에 집중하는 시간이 많다. 프로그래밍 언어의 문법이나 프레임워크의 구조, 협업 도구 사용법 등 기초 역량을 쌓기 위한 ‘학습 중심’의 시간이 꼭 필요.
+    이 시기를 지나서도 이전과 같은 방식으로 일하고 있다면, 어느 순간부터는 ‘기술은 꾸준히 배우는데도 성장하지 못하는’ 느낌이 찾아온다.
+    이 단계에서 반드시 이루어져야 하는 전환점. **‘기술 중심 성장’에서 ‘문제 중심 성장’으로 관점을 바꾸는 것**
+  - 문제 중심 성장은 **‘무엇이 문제인지’, ‘어떻게 해결할지’, 그리고 ‘왜 이 선택이 맞는지’** 고민하는 데서 시작.
+  - 시장은 기술보다 ‘맥락’을 요구한다
