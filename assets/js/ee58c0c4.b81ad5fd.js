@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([["3830"],{708:function(e){e.exports=JSON.parse('{"tag":{"label":"event","permalink":"/tags/event","allTagsPath":"/tags","count":1,"unlisted":false},"listMetadata":{"permalink":"/tags/event","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

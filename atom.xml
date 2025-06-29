@@ -2,11 +2,136 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jum0.github.io/</id>
     <title>DevJum0 Blog</title>
-    <updated>2025-06-21T00:00:00.000Z</updated>
+    <updated>2025-06-28T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jum0.github.io/"/>
     <subtitle>DevJum0 Blog</subtitle>
     <icon>https://jum0.github.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[6월 4주 차 기록]]></title>
+        <id>https://jum0.github.io/25-06-w4</id>
+        <link href="https://jum0.github.io/25-06-w4"/>
+        <updated>2025-06-28T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[{/ truncate /}]]></summary>
+        <content type="html"><![CDATA[
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="export">export<a href="https://jum0.github.io/25-06-w4#export" class="hash-link" aria-label="export에 대한 직접 링크" title="export에 대한 직접 링크">​</a></h3>
+<div class="language-typescript codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-typescript codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">export</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">default</span><span class="token plain"> Component1</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">export</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> </span><span class="token function-variable function" style="color:#d73a49">Component2</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">&lt;</span><span class="token plain">div</span><span class="token operator" style="color:#393A34">&gt;</span><span class="token plain">Component</span><span class="token operator" style="color:#393A34">&lt;</span><span class="token operator" style="color:#393A34">/</span><span class="token plain">div</span><span class="token operator" style="color:#393A34">&gt;</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
+<p><code>export</code> 방식에는 named와 default가 있다</p>
+<ul>
+<li>
+<p>named</p>
+<ul>
+<li>여러 개를 export 할 수 있음(컴포넌트, 타입 등)</li>
+<li>다른 파일에서 사용할 때<!-- -->
+<ul>
+<li><code>import { Component2 } from './Component1';</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>default</p>
+<ul>
+<li>하나만 export 할 수 있음</li>
+<li>다른 파일에서 사용할 때<!-- -->
+<ul>
+<li><code>import Component1 from './Component1';</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>default로 지정해서 내보내는 방식은 하나의 파일에서 하나만 사용할 수 있고, 동일한 파일에서 타입 등을 named로 같이 내보낸다면
+굳이 default로 써서 내보내는 방식을 쓸 필요가 있는지 생각했다. 또한 가져오면서 이름 변경이 자유로우므로 유지보수 측면에서
+파일을 추적하는 데 어려움이 있었다. 이런 이유로 named 방식에 비해 불편하다고 생각하여 사용하는 이유가 궁금했다.
+찾아보니 역사적인 배경이 있었다.</p>
+<ul>
+<li>
+<p>자바스크립트의 <code>import</code> / <code>export</code>(ESM)가 표준이 되기 전에 Node.js 환경에서는 CommonJS 방식인 <code>require</code> / <code>module.exports</code>가
+널리 쓰였는데 <code>module.exports</code>에 할당하는 것은 CommonJS의 흔한 패턴 중 하나였다.</p>
+<div class="language-javascript codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-javascript codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 과거 CommonJS 방식</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">myCoolFunction</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">module</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">exports</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> myCoolFunction</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// 가져오기</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> myCoolFunction </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">require</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">'./myCoolFunction'</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
+<p><code>export default</code>는 <code>module.exports</code>와 거의 1:1로 대응하는 개념으로,
+기존 CommonJS 생태계와의 호환성과 개발자들의 습관을 고려하여 모듈의 '기본값'을 지정하는 유사한 방법을 표준으로 채택한 것이다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>우리 프로젝트에서는 as를 사용하지 않는 named 방식을 사용하고 있는데, tiptap 붙이다가 갑자기 생각나서..</p>
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="jsonstringifyvalue-replacer-space">JSON.stringify(value[, replacer[, space]])<a href="https://jum0.github.io/25-06-w4#jsonstringifyvalue-replacer-space" class="hash-link" aria-label="JSON.stringify(value[, replacer[, space]])에 대한 직접 링크" title="JSON.stringify(value[, replacer[, space]])에 대한 직접 링크">​</a></h3>
+<ul>
+<li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#%EA%B5%AC%EB%AC%B8" target="_blank" rel="noopener noreferrer">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#구문</a></li>
+<li>에러를 보기 편하게 매핑하다가 찾아보게 됐다</li>
+</ul>
+<div class="language-javascript codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-javascript codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> error </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">name</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'TypeError'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">message</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'Cannot read properties of undefined'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">stack</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'at &lt;anonymous&gt;:1:1'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">details</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token literal-property property" style="color:#36acaa">fileName</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'main.js'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token literal-property property" style="color:#36acaa">lineNumber</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">42</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
+<div class="language-javascript codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-javascript codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 1. value만</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token console class-name">console</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">error</span><span class="token punctuation" style="color:#393A34">(</span><span class="token known-class-name class-name">JSON</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">stringify</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">error</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">{"name":"TypeError","message":"Cannot read properties of undefined","stack":"at &lt;anonymous&gt;:1:1","details":{"fileName":"main.js","lineNumber":42}}</span><br></span></code></pre></div></div>
+<div class="language-javascript codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-javascript codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 2. value와 space</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token console class-name">console</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">error</span><span class="token punctuation" style="color:#393A34">(</span><span class="token known-class-name class-name">JSON</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">stringify</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">error</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token keyword null nil" style="color:#00009f">null</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">2</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">{</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  "name": "TypeError",</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  "message": "Cannot read properties of undefined",</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  "stack": "at &lt;anonymous&gt;:1:1",</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  "details": {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    "fileName": "main.js",</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    "lineNumber": 42</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  }</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span></code></pre></div></div>
+<div class="language-javascript codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-javascript codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 3. value, replacer, space</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> whitelist </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token string" style="color:#e3116c">'name'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'message'</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token console class-name">console</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">error</span><span class="token punctuation" style="color:#393A34">(</span><span class="token known-class-name class-name">JSON</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">stringify</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">error</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> whitelist</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">2</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
+<div class="language-bash codeBlockContainer_nkr7 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_lUiR"><pre tabindex="0" class="prism-code language-bash codeBlock_f7Ez thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_bYHv"><span class="token-line" style="color:#393A34"><span class="token plain">{</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  "name": "TypeError",</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  "message": "Cannot read properties of undefined",</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span></code></pre></div></div>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="에디터-선정">에디터 선정<a href="https://jum0.github.io/25-06-w4#%EC%97%90%EB%94%94%ED%84%B0-%EC%84%A0%EC%A0%95" class="hash-link" aria-label="에디터 선정에 대한 직접 링크" title="에디터 선정에 대한 직접 링크">​</a></h3>
+<ul>
+<li>
+<p>진행 중인 프로젝트에 추가할 에디터를 찾아보면서 정리</p>
+</li>
+<li>
+<p>에디터 조건</p>
+<ul>
+<li>Rich-text, 이미지 첨부, 동영상 링크, Table 기능</li>
+<li>시간적 여유가 많지 않으므로 최대한 기능을 빠르게 붙이기를 원함</li>
+</ul>
+</li>
+<li>
+<p>후보</p>
+<ul>
+<li><a href="https://tiptap.dev/" target="_blank" rel="noopener noreferrer">Tiptap</a>, <a href="https://lexical.dev/" target="_blank" rel="noopener noreferrer">Lexical</a>, <a href="https://platejs.org/" target="_blank" rel="noopener noreferrer">Plate</a></li>
+<li>github star 순서 <a href="https://github.com/ueberdosis/tiptap" target="_blank" rel="noopener noreferrer">Tiptap(31.2k)</a> &gt; <a href="https://github.com/facebook/lexical" target="_blank" rel="noopener noreferrer">Lexical(21.5k)</a> &gt; <a href="https://github.com/udecode/plate" target="_blank" rel="noopener noreferrer">Plate(14.4k)</a> (25.06.28 기준)</li>
+<li>안정성은 비슷</li>
+</ul>
+</li>
+<li>
+<p>장단점</p>
+<ul>
+<li>Tiptap<!-- -->
+<ul>
+<li>장점 - <a href="https://tiptap.dev/docs/ui-components/templates/simple-editor" target="_blank" rel="noopener noreferrer">https://tiptap.dev/docs/ui-components/templates/simple-editor</a> 템플릿 패키지 제공</li>
+<li>단점 - Table은 따로 붙여야 함</li>
+</ul>
+</li>
+<li>Lexical<!-- -->
+<ul>
+<li>장점 - Playground 코드에 Table도 같이 붙어 있어서 작업하면 되겠다고 생각</li>
+<li>단점 - github에 Playground가 분리된 코드로 있지만, 전체 lexical 프로젝트에서 공유하는 설정 파일 등이 있어서 따로 분리해서 붙이는데 적지 않은 공수 필요</li>
+</ul>
+</li>
+<li>Plate<!-- -->
+<ul>
+<li>장점 - 공식 문서에 Table을 포함한 예시 코드가 잘 나와 있어서 적용하면 되겠다고 생각</li>
+<li>단점 - 많은 컴포넌트, 훅, 유틸 등 직접 다 추가해야 함. 설정 파일까지는 정확히 나와 있지 않음</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>결론</p>
+<ul>
+<li>Tiptap 템플릿을 붙이고 Table을 추가하는 게 가장 간단하다고 판단</li>
+</ul>
+</li>
+</ul>]]></content>
+        <author>
+            <name>jum0</name>
+            <uri>https://github.com/jum0</uri>
+        </author>
+        <category label="export" term="export"/>
+        <category label="export default" term="export default"/>
+        <category label="stringify" term="stringify"/>
+        <category label="editor" term="editor"/>
+        <category label="tiptap" term="tiptap"/>
+        <category label="lexical" term="lexical"/>
+        <category label="plate" term="plate"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[6월 3주 차 기록]]></title>
         <id>https://jum0.github.io/25-06-w3</id>
@@ -52,7 +177,7 @@
 <ul>
 <li><a href="https://news.hada.io/topic?id=21430&amp;utm_source=slack&amp;utm_medium=bot&amp;utm_campaign=T02084P9YJE" target="_blank" rel="noopener noreferrer">https://news.hada.io/topic?id=21430&amp;utm_source=slack&amp;utm_medium=bot&amp;utm_campaign=T02084P9YJE</a></li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_ERPW" id="개발자의-물경력은-어떻게-만들어지는가">개발자의 물경력은 어떻게 만들어지는가<a href="https://jum0.github.io/25-06-w3#%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98-%EB%AC%BC%EA%B2%BD%EB%A0%A5%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%A7%8C%EB%93%A4%EC%96%B4%EC%A7%80%EB%8A%94%EA%B0%80" class="hash-link" aria-label="개발자의 물경력은 어떻게 만들어지는가에 대한 직접 링크" title="개발자의 물경력은 어떻게 만들�어지는가에 대한 직접 링크">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_ERPW" id="개발자의-물경력은-어떻게-만들어지는가">개발자의 물경력은 어떻게 만들어지는가<a href="https://jum0.github.io/25-06-w3#%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%9D%98-%EB%AC%BC%EA%B2%BD%EB%A0%A5%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%A7%8C%EB%93%A4%EC%96%B4%EC%A7%80%EB%8A%94%EA%B0%80" class="hash-link" aria-label="개발자의 물경력�은 어떻게 만들어지는가에 대한 직접 링크" title="개발자의 물경력은 어떻게 만들어지는가에 대한 직접 링크">​</a></h3>
 <ul>
 <li>
 <p><a href="https://yozm.wishket.com/magazine/detail/3144/" target="_blank" rel="noopener noreferrer">https://yozm.wishket.com/magazine/detail/3144/</a></p>
@@ -73,6 +198,8 @@
         <category label="zod" term="zod"/>
         <category label="safeParse" term="safeParse"/>
         <category label="scutil" term="scutil"/>
+        <category label="pnpm" term="pnpm"/>
+        <category label="catalog" term="catalog"/>
         <category label="nextjs" term="nextjs"/>
     </entry>
     <entry>
@@ -301,9 +428,9 @@ onclick 이벤트가 아닌 onMouseDown 이벤트를 사용하면, 해당 이벤
             <name>jum0</name>
             <uri>https://github.com/jum0</uri>
         </author>
-        <category label="Event" term="Event"/>
+        <category label="event" term="event"/>
         <category label="relatedTarget" term="relatedTarget"/>
-        <category label="Safari" term="Safari"/>
+        <category label="safari" term="safari"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>

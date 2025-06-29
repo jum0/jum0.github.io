@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([["7109"],{9948:function(e){e.exports=JSON.parse('{"authors":[{"name":"jum0","title":"Frontend Developer","url":"https://github.com/jum0","imageURL":"https://github.com/jum0.png","key":"jum0","page":null,"count":8}]}')}}]);
