@@ -1,0 +1,133 @@
+---
+slug: '/25-06-w4'
+title: 6월 4주 차 기록
+authors: [jum0]
+tags: [export, export default, stringify, editor, tiptap, lexical, plate]
+---
+
+{/* truncate */}
+
+### export
+
+```typescript
+export default Component1;
+
+export const Component2 = () => <div>Component</div>;
+```
+
+`export` 방식에는 named와 default가 있다
+
+- named
+  - 여러 개를 export 할 수 있음(컴포넌트, 타입 등)
+  - 다른 파일에서 사용할 때
+    - `import { Component2 } from './Component1';`
+- default
+
+  - 하나만 export 할 수 있음
+  - 다른 파일에서 사용할 때
+    - `import Component1 from './Component1';`
+
+- default로 지정해서 내보내는 방식은 하나의 파일에서 하나만 사용할 수 있고, 동일한 파일에서 타입 등을 named로 같이 내보낸다면
+  굳이 default로 써서 내보내는 방식을 쓸 필요가 있는지 생각했다. 또한 가져오면서 이름 변경이 자유로우므로 유지보수 측면에서
+  파일을 추적하는 데 어려움이 있었다. 이런 이유로 named 방식에 비해 불편하다고 생각하여 사용하는 이유가 궁금했다.
+  찾아보니 역사적인 배경이 있었다.
+
+  - 자바스크립트의 `import` / `export`(ESM)가 표준이 되기 전에 Node.js 환경에서는 CommonJS 방식인 `require` / `module.exports`가
+    널리 쓰였는데 `module.exports`에 할당하는 것은 CommonJS의 흔한 패턴 중 하나였다.
+
+    ```javascript
+    // 과거 CommonJS 방식
+    function myCoolFunction() {}
+    module.exports = myCoolFunction;
+
+    // 가져오기
+    const myCoolFunction = require('./myCoolFunction');
+    ```
+
+    `export default`는 `module.exports`와 거의 1:1로 대응하는 개념으로,
+    기존 CommonJS 생태계와의 호환성과 개발자들의 습관을 고려하여 모듈의 '기본값'을 지정하는 유사한 방법을 표준으로 채택한 것이다.
+
+우리 프로젝트에서는 as를 사용하지 않는 named 방식을 사용하고 있는데, tiptap 붙이다가 갑자기 생각나서..
+
+### JSON.stringify(value[, replacer[, space]])
+
+- https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#구문
+- 에러를 보기 편하게 매핑하다가 찾아보게 됐다
+
+```javascript
+const error = {
+  name: 'TypeError',
+  message: 'Cannot read properties of undefined',
+  stack: 'at <anonymous>:1:1',
+  details: {
+    fileName: 'main.js',
+    lineNumber: 42,
+  },
+};
+```
+
+```javascript
+// 1. value만
+console.error(JSON.stringify(error));
+```
+
+```bash
+{"name":"TypeError","message":"Cannot read properties of undefined","stack":"at <anonymous>:1:1","details":{"fileName":"main.js","lineNumber":42}}
+```
+
+```javascript
+// 2. value와 space
+console.error(JSON.stringify(error, null, 2));
+```
+
+```bash
+{
+  "name": "TypeError",
+  "message": "Cannot read properties of undefined",
+  "stack": "at <anonymous>:1:1",
+  "details": {
+    "fileName": "main.js",
+    "lineNumber": 42
+  }
+}
+```
+
+```javascript
+// 3. value, replacer, space
+const whitelist = ['name', 'message'];
+console.error(JSON.stringify(error, whitelist, 2));
+```
+
+```bash
+{
+  "name": "TypeError",
+  "message": "Cannot read properties of undefined",
+}
+
+```
+
+---
+
+### 에디터 선정
+
+- 진행 중인 프로젝트에 추가할 에디터를 찾아보면서 정리
+
+- 에디터 조건
+  - Rich-text, 이미지 첨부, 동영상 링크, Table 기능
+  - 시간적 여유가 많지 않으므로 최대한 기능을 빠르게 붙이기를 원함
+- 후보
+  - [Tiptap](https://tiptap.dev/), [Lexical](https://lexical.dev/), [Plate](https://platejs.org/)
+  - github star 순서 [Tiptap(31.2k)](https://github.com/ueberdosis/tiptap) > [Lexical(21.5k)](https://github.com/facebook/lexical) > [Plate(14.4k)](https://github.com/udecode/plate) (25.06.28 기준)
+  - 안정성은 비슷
+- 장단점
+  - Tiptap
+    - 장점 - https://tiptap.dev/docs/ui-components/templates/simple-editor 템플릿 패키지 제공
+    - 단점 - Table은 따로 붙여야 함
+  - Lexical
+    - 장점 - Playground 코드에 Table도 같이 붙어 있어서 작업하면 되겠다고 생각
+    - 단점 - github에 Playground가 분리된 코드로 있지만, 전체 lexical 프로젝트에서 공유하는 설정 파일 등이 있어서 따로 분리해서 붙이는데 적지 않은 공수 필요
+  - Plate
+    - 장점 - 공식 문서에 Table을 포함한 예시 코드가 잘 나와 있어서 적용하면 되겠다고 생각
+    - 단점 - 많은 컴포넌트, 훅, 유틸 등 직접 다 추가해야 함. 설정 파일까지는 정확히 나와 있지 않음
+- 결론
+  - Tiptap 템플릿을 붙이고 Table을 추가하는 게 가장 간단하다고 판단
