@@ -1,0 +1,73 @@
+---
+slug: '/25-07-w1'
+title: 7월 1주 차 기록
+authors: [jum0]
+tags: [git, tailwindcss, '@source']
+---
+
+{/* truncate */}
+
+### git
+
+```bash
+git push origin @
+```
+
+- https://git-scm.com/docs/gitrevisions#Documentation/gitrevisions.txt-
+- 현재 브랜치를 원격 저장소(origin)에 푸시
+- `git push origin HEAD` 와 동일
+
+```c
+/* parse @something syntax, when 'something' is not {.*} */
+static int interpret_empty_at(const char *name, int namelen, int len, struct strbuf *buf)
+{
+	const char *next;
+
+	if (len || name[1] == '{')
+		return -1;
+
+	/* make sure it's a single @, or @@{.*}, not @foo */
+	next = memchr(name + len + 1, '@', namelen - len - 1);
+	if (next && next[1] != '{')
+		return -1;
+	if (!next)
+		next = name + namelen;
+	if (next != name + 1)
+		return -1;
+
+	strbuf_reset(buf);
+	strbuf_add(buf, "HEAD", 4);
+	return 1;
+}
+
+```
+
+- https://github.com/git/git/blob/master/object-name.c
+- 단독 @ 를 문자열 "HEAD" 로 치환한다.
+
+### tailwindcss v4 `@source`
+
+```css
+/* example.css */
+@source "../../../packages/design/src/**/*.{ts,tsx}";
+```
+
+- `.css` 파일 내 `@source`
+- https://tailwindcss.com/blog/tailwindcss-v4#automatic-content-detection
+- 기존의 tailwind v3에서 사용하던 `content` 배열을 대체한다.
+- `.gitignore` 파일에 있는 모든 것을 자동으로 무시하여 버전 관리되지 않는 의존성 파일이나 생성된 파일들(`/node_modules`, `/coverage`, `/build`, `/.next` 등)을 스캔하지 않도록 하고,
+  기본적으로 제외되는 소스를 명시적으로 추가해야 할 경우가 생긴다면, css 파일에서 `@source` 를 사용하여 추가할 수 있다.
+
+---
+
+### 타입스크립트 네이티브 프리뷰 소개
+
+- https://velog.io/@sehyunny/ts-native-preview?utm_source=substack&utm_medium=email
+
+### tailwind CSS v4.0: 최신 웹 개발의 완벽한 게임 체인저
+
+- https://siosio3103.medium.com/tailwind-css-v4-0-%EC%B5%9C%EC%8B%A0-%EC%9B%B9-%EA%B0%9C%EB%B0%9C%EC%9D%98-%EC%99%84%EB%B2%BD%ED%95%9C-%EA%B2%8C%EC%9E%84-%EC%B2%B4%EC%9D%B8%EC%A0%80-c51c886efaa5
+
+### The Gap Strikes Back: 이제 스타일링 가능해진 CSS Gap
+
+- https://news.hada.io/topic?id=21806&utm_source=slack&utm_medium=bot&utm_campaign=T02084P9YJE
