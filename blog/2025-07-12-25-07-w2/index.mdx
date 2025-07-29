@@ -1,0 +1,101 @@
+---
+slug: '/25-07-w2'
+title: 7월 2주 차 기록
+authors: [jum0]
+tags: [react-hook-form, resolver, zod, refine, superRefine]
+---
+
+{/* truncate */}
+
+### resolver
+
+- https://react-hook-form.com/docs/useform#resolver
+- 다른 외부 유효성 검사 라이브러리와 결합하기 위해 사용한다. [Yup](https://github.com/jquense/yup), [Zod](https://zod.dev/), [Joi](https://joi.dev/) 등
+- 우리는 zodResolver를 사용하고 있는데, resolver를 사용하지 않는다면 react-hook-form 자체의 입력 필드에 대한 유효성 검사를 직접 추가하고 중복으로 작성해야 한다.
+  그러나 resolver를 사용하면, 스키마 레벨에서 쉽게 유효성 검사를 추가할 수 있다.
+
+```tsx
+import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const formSchema = z.object({
+  codes: z.array(z.string()),
+  message: z.string(),
+});
+type FormSchema = z.infer<typeof formSchema>;
+
+const App = () => {
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      codes: [],
+      message: '',
+    },
+  });
+
+  return (
+    <FormProvider {...form}>
+      <form>
+        <input {...form.register('codes')} />
+        <input {...form.register('message')} />
+        <button type="submit">Submit</button>
+      </form>
+    </FormProvider>
+  );
+};
+```
+
+### superRefine()
+
+- https://zod.dev/api?id=superrefine
+- [`.refine()`](https://zod.dev/api?id=refine)은 한 번에 하나의 메시지만 가능하기 때문에 단일 결과면 충분할 때 사용하고,
+  `.superRefine()`은 여러 조건을 한꺼번에 검사하거나, 필드마다 다른 메시지를 보여줄 때 사용한다.
+- 두 메서드 모두 기본 스키마 검증을 통과한 값에 후처리 형태로 실행된다.
+
+#### refine()
+
+```tsx
+import { z } from 'zod';
+
+const PasswordSchema = z
+  .object({
+    password: z.string().min(8),
+    confirm: z.string(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    path: ['confirm'],
+    message: '비밀번호가 일치하지 않습니다',
+  });
+```
+
+#### superRefine()
+
+```tsx
+import { z } from 'zod';
+
+const formSchema = z
+  .object({
+    isPopupEnabled: z.boolean(),
+    popupStartDate: z.string().datetime().optional(),
+    popupEndDate: z.string().datetime().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.isPopupEnabled) {
+      if (!data.popupStartDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '팝업 시작일을 설정해 주세요.',
+          path: ['popupStartDate'],
+        });
+      }
+      if (!data.popupEndDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '팝업 종료일을 설정해 주세요.',
+          path: ['popupEndDate'],
+        });
+      }
+    }
+  });
+```
